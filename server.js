@@ -20,6 +20,10 @@ app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
+app.use('/', (req, res) => {
+  res.render('index.ejs')
+})
+
 app.post('/sms', async (req, res) => {
   const twiml = new MessagingResponse
 
