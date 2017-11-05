@@ -4,9 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon lib/server.js --exec babel-node",
-    "postinstall": "babel lib -d dist",
-    "start": "node dist/server.js"
+    "dev": "nodemon server.js --exec babel-node",
+    "start": "node server.js"
   },
   "keywords": [],
   "author": "",

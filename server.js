@@ -8,8 +8,10 @@ const bodyParser  = require("body-parser");
 const router = express.Router();
 const MessagingResponse = require('twilio').twiml.MessagingResponse
 const axios = require('axios')
-require("babel-core/register");
-require("babel-polyfill");
+const path = require('path');
+require('babel-register');
+require('babel-polyfill');
+require(path.join(__dirname, '/server.js'))
 
 app.use(cors());
 
