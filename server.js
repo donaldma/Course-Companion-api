@@ -42,7 +42,7 @@ app.post('/sms', async (req, res) => {
         
         let litresPerGallon = 3.785
         let cadPricePerGallon = incomingMessageArray[1] * currentDollar // Current dollar
-        let gasPrice = litresPerGallon / cadPricePerGallon
+        let gasPrice = cadPricePerGallon / litresPerGallon
   
         let roundedGasPrice = gasPrice.toFixed(4)
 
