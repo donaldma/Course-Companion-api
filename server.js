@@ -13,6 +13,10 @@ require('babel-register');
 require('babel-polyfill');
 require(path.join(__dirname, '/server.js'))
 
+setInterval(function() {
+    http.get("http://donaldma-sms.herokuapp.com");
+}, 300000);
+
 app.use(cors());
 
 app.set('view engine', 'ejs');
