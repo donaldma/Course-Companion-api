@@ -1,1 +1,1 @@
-web: ./node_modules/.bin/tsc --module commonjs --outDir build/ --noImplicitAny --sourceMap --target ES5 server.ts && node build/server.js
+web: ./node_modules/.bin/tsc --module commonjs --outDir build/ --lib 'es7' --noImplicitAny --sourceMap --preserveConstEnums --strictNullChecks --experimentalDecorators --allowJs --target es6 server.ts && node build/server.js
