@@ -14,7 +14,7 @@ require(path.join(__dirname, '/server.js'))
 import TempController from './api/controllers/TempController'
 
 setInterval(function () {
-  http.get('http://donaldma-sms.herokuapp.com')
+  http.get('http://donaldma-api.herokuapp.com')
 }, 300000)
 
 app.use(cors())
