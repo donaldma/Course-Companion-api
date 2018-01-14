@@ -40,7 +40,7 @@ export class S3Client {
   async getSignedUrl(fileName: string, fileType: string) {
     let params = {
       Bucket: bucketName,
-      Key: fileName,
+      Key: `ical/${fileName}`,
       Expires: 60,
       ContentType: fileType
     }
