@@ -11,6 +11,7 @@ export default router
 router.get('/match/:id',
   async function (req, res, next) {
     let icalFileForUser = await getIcalFileForUser(req.params.id)
+    console.log('1',icalFileForUser)
 
     let icalFileForUserJson = IcalService.icalToJson(icalFileForUser)
 
