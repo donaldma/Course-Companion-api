@@ -54,9 +54,7 @@ export class S3Client {
         signedUrl.push(data)
       }
     })
-    return {
-      signedUrl: signedUrl
-    }
+    return signedUrl[0]
   }
 }
 

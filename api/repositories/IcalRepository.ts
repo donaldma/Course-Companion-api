@@ -3,7 +3,7 @@ import { IcalFile } from '../models/IcalFile'
 import * as createError from 'http-errors'
 
 export async function getIcalFileForUser(userId: number): Promise<IcalFile[]> {
-  let icalFiles = await s3Client.getFolderContents('/', false, '.ics')
+  let icalFiles = await s3Client.getFolderContents('ical/', false, '.ics')
   return icalFiles.map(file => {
     if(userId.toString() === file.fileName.slice(0, -4)) {
       return file.content

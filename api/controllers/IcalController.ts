@@ -21,6 +21,7 @@ router.get('/match/:id',
 router.get('/upload',
   async function (req, res, next) {
     let signedUrl = await awsS3Client.getSignedUrl(req.query.fileName, req.query.fileType)
-    res.send(signedUrl[0])
+    console.log(signedUrl)
+    res.send(signedUrl)
   }
 )
