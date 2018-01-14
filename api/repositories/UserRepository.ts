@@ -10,6 +10,13 @@ async function getByFacebookId(facebookId: number) {
 
 export default {
 
+  findById: async function(userId: string) {
+    let response = await knex('user')
+      .select()
+      .where('id', userId)
+    return response[0]
+  },
+
   findByEmail: async function(email: string) {
     return await knex('user')
       .select()

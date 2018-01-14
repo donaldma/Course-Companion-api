@@ -2,10 +2,18 @@ import * as createError from 'http-errors'
 import { Router } from 'express'
 import { PassportService } from '../services/permission/PassportService'
 import { User } from '../models/User'
+import UserRepository from '../repositories/UserRepository'
 
 const router = Router({ mergeParams: true })
 
 export default router
+
+router.get('/:id',
+  async function (req, res, next) {
+    let user = await UserRepository.findById(req.params.id)
+    res.send(user)
+  }
+)
 
 router.post('/login/facebook',
   function (req, res, next) {
