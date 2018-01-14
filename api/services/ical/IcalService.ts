@@ -1,4 +1,4 @@
-import { IcalFile } from '../../models/ICalFile'
+import { IcalFile } from '../../models/IcalFile'
 const ical2json = require('ical2json')
 
 export default {
