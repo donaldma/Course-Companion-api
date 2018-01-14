@@ -5,7 +5,7 @@ import UserRepository from '../../repositories/UserRepository'
 
 export default {
 
-  registerOrLoginFacebook: async function (facebookId: string, profile: any, transaction: Knex.Transaction) {
+  registerOrLoginFacebook: async function (facebookId: string, profile: any) {
     const emailArray: Array<{ value: string }> = profile.emails
     if (emailArray.length === 0) {
       throw createError(400, 'You have no emails associated with your Facebook account.')
@@ -14,7 +14,7 @@ export default {
     if (!email || email === '') {
       throw createError(400, 'Sorry, we can’t process your Facebook signup for now. Please signup using an email address.')
     }
-
+    
     // Reference: https://developers.facebook.com/docs/messenger-platform/user-profile
     // Reference: https://developers.facebook.com/docs/graph-api/reference/user
     const name = profile.displayName
@@ -23,9 +23,9 @@ export default {
     if (facebookPhotos.length > 0) {
       image = `${facebookPhotos[0].value}&height=500`
     }
-
+    
     const _json = profile._json
-
+    
     const city: string | undefined = _json.location ? _json.location.name : undefined
     const facebookGender: 'male' | 'female' | string = _json.gender
     let gender: string | undefined
@@ -34,12 +34,11 @@ export default {
     } else if (facebookGender === 'female') {
       gender = 'f'
     }
-
+    
     const rawFacebookProfileString: string = profile['_raw']
-
+    
     const existingUser = await UserRepository.findByEmail(email)
-
-    if (existingUser) {
+    if (existingUser.length > 0) {
       const updateObject: any = {
         emailVerified: true,
         facebookId: facebookId
@@ -53,21 +52,21 @@ export default {
       updateObject.facebookMetadata = rawFacebookProfileString
       const user = await UserRepository.update(existingUser.id, updateObject)
       return user
-
+      
     } else {
       const createObject = {
-        email: email,
-        emailVerified: true,
         name: name,
         image: image,
-        city: city,
-        gender: gender,
+        email: email,
         facebookId: facebookId,
-        facebookMetadata: rawFacebookProfileString,
-        createdAt: new Date()
+        gender: gender,
+        city: city,
+        createdAt: new Date(),
+        updatedAt: new Date()
       }
-      const user = await UserRepository.create(createObject)
 
+      const user = await UserRepository.create(createObject)
+      
       return user
     }
   }
