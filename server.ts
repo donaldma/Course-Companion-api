@@ -10,6 +10,7 @@ const port = 9001
 const app = express()
 const server = http.createServer(app)
 const router = express.Router()
+const knexLogger = require('knex-logger')
 require(path.join(__dirname, '/server.js'))
 
 import UserController from './api/controllers/UserController'
@@ -20,6 +21,7 @@ setInterval(function () {
 }, 300000)
 
 app.use(cors())
+app.use(knexLogger(knex));
 
 app.use(bodyParser.urlencoded({
   extended: true
