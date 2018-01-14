@@ -8,8 +8,8 @@ import authenticationConfiguration from '../../config/authentication'
 export const PassportService = passport
 
 passport.use(new FacebookTokenStrategy({
-  clientID: authenticationConfiguration.facebook.clientId,
-  clientSecret: authenticationConfiguration.facebook.clientSecret,
+  clientID: authenticationConfiguration.facebook.clientId!,
+  clientSecret: authenticationConfiguration.facebook.clientSecret!,
   profileFields: ['id', 'email', 'displayName', 'photos', 'gender', 'location', 'locale', 'timezone']
 }, (accessToken: string, refreshToken: string, profile: any, done: Function) => {
   return RegisterService.registerOrLoginFacebook(accessToken, profile)

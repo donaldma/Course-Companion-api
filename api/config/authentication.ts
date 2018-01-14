@@ -1,6 +1,12 @@
+require('dotenv').config({silent: true})
+
 export default {
   facebook: {
-    clientId: '1153731794732054',
-    clientSecret: '6b433c901fc3b4c963e285f9e152d523'
+    clientId: process.env.FB_CLIENT_ID,
+    clientSecret: process.env.FB_CLIENT_SECRET
+  },
+  aws: {
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
   }
 }

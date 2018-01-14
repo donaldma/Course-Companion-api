@@ -13,6 +13,7 @@ const router = express.Router()
 require(path.join(__dirname, '/server.js'))
 
 import UserController from './api/controllers/UserController'
+import IcalController from './api/controllers/IcalController'
 
 setInterval(function () {
   http.get('http://donaldma-api.herokuapp.com')
@@ -26,6 +27,7 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json())
 
 app.use('/api/user', UserController)
+app.use('/api/ical', IcalController)
 
 server.listen(process.env.PORT || port, () => {
   console.log(`Server running on port ${port}`)
