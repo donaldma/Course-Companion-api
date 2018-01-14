@@ -13,8 +13,10 @@ passport.use(new FacebookTokenStrategy({
   profileFields: ['id', 'email', 'displayName', 'photos', 'gender', 'location', 'locale', 'timezone']
 }, (accessToken: string, refreshToken: string, profile: any, done: Function) => {
   return RegisterService.registerOrLoginFacebook(accessToken, profile).then((user: User) => {
+    console.log('finish',user)
     done(null, user)
   }).catch((error) => {
+    console.log('err',error)
     done(error)
   })
 }))

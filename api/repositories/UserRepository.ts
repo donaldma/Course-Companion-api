@@ -18,27 +18,17 @@ export default {
 
   create: async function(userObject: any) {
     await knex('user')
-      .insert({
-        name: userObject.name,
-        image: userObject.image,
-        email: userObject.email,
-        facebookId: userObject.facebookId,
-        gender: userObject.gender,
-        location: undefined,
-        city: userObject.city,
-        province: undefined,
-        country: undefined,
-        created_at: userObject.createdAt,
-        updated_at: userObject.updatedAt
-      })
+      .insert(userObject)
     
     return getByFacebookId(userObject.facebookId)
   },
 
   update: async function(userId: number, userObject: any) {
-    return await knex('user')
+    await knex('user')
       .update(userObject)
       .where({ id: userId })
+
+    return getByFacebookId(userObject.facebookId)
   }
 
 }

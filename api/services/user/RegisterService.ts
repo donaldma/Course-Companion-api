@@ -40,17 +40,15 @@ export default {
     const existingUser = await UserRepository.findByEmail(email)
     if (existingUser.length > 0) {
       const updateObject: any = {
-        emailVerified: true,
         facebookId: facebookId
       }
-      if (!existingUser.city && city) {
+      if (!existingUser[0].city && city) {
         updateObject.city = city
       }
-      if (!existingUser.gender && gender) {
+      if (!existingUser[0].gender && gender) {
         updateObject.gender = gender
       }
-      updateObject.facebookMetadata = rawFacebookProfileString
-      const user = await UserRepository.update(existingUser.id, updateObject)
+      const user = await UserRepository.update(existingUser[0].id, updateObject)
       return user
       
     } else {
@@ -61,8 +59,8 @@ export default {
         facebookId: facebookId,
         gender: gender,
         city: city,
-        createdAt: new Date(),
-        updatedAt: new Date()
+        created_at: new Date(),
+        updated_at: new Date()
       }
 
       const user = await UserRepository.create(createObject)
