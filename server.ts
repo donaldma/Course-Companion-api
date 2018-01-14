@@ -4,9 +4,9 @@ import * as http from 'http'
 import * as bodyParser from 'body-parser'
 import axios from 'axios'
 import * as path from 'path'
-import * as knexLogger from 'knex-logger'
 import knex from './api/config/knex'
 
+const port = 9001
 const app = express()
 const server = http.createServer(app)
 const router = express.Router()
@@ -19,7 +19,6 @@ setInterval(function () {
 }, 300000)
 
 app.use(cors())
-app.use(knexLogger(knex))
 
 app.use(bodyParser.urlencoded({
   extended: true
@@ -28,6 +27,6 @@ app.use(bodyParser.json())
 
 app.use('/api/user', UserController)
 
-server.listen(process.env.PORT || 9001, () => {
-  console.log('Server running')
+server.listen(process.env.PORT || port, () => {
+  console.log(`Server running on port ${port}`)
 })
