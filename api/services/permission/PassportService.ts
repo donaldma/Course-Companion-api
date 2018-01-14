@@ -15,7 +15,6 @@ passport.use(new FacebookTokenStrategy({
   return RegisterService.registerOrLoginFacebook(accessToken, profile).then((user: User) => {
     done(null, user)
   }).catch((error) => {
-    console.log('err',error)
     done(error)
   })
 }))
