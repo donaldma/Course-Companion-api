@@ -12,5 +12,11 @@ passport.use(new FacebookTokenStrategy({
   clientSecret: authenticationConfiguration.facebook.clientSecret!,
   profileFields: ['id', 'email', 'displayName', 'photos', 'gender', 'location', 'locale', 'timezone']
 }, (accessToken: string, refreshToken: string, profile: any, done: Function) => {
-  return RegisterService.registerOrLoginFacebook(accessToken, profile)
+  knex.transaction((transaction) => {
+    return RegisterService.registerOrLoginFacebook(accessToken, profile, transaction)
+  }).then((user: User) => {
+    done(null, user)
+  }).catch((error) => {
+    done(error)
+  })
 }))

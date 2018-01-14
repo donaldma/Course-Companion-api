@@ -5,7 +5,7 @@ import UserRepository from '../../repositories/UserRepository'
 
 export default {
 
-  registerOrLoginFacebook: async function (facebookId: string, profile: any) {
+  registerOrLoginFacebook: async function (facebookId: string, profile: any, transaction: Knex.Transaction) {
     const emailArray: Array<{ value: string }> = profile.emails
     if (emailArray.length === 0) {
       throw createError(400, 'You have no emails associated with your Facebook account.')
