@@ -2,7 +2,7 @@ import AWS = require('aws-sdk')
 import credentials from '../../config/authentication'
 
 // make this secure eventually
-let awsS3 = new AWS.S3(credentials.aws);
+let awsS3 = new AWS.S3(credentials.aws)
 
 const bucketName = 'nwhacks2018'
 
@@ -44,15 +44,17 @@ export class S3Client {
       Expires: 60,
       ContentType: fileType
     }
-
-    let signedUrl = await awsS3.getSignedUrl('putObject', params, (err, data) => {
+    
+    let signedUrl:string[] = []
+    await awsS3.getSignedUrl('putObject', params, (err, data) => {
       if (err) {
-        console.log(err);
-        return err;
+        console.log(err)
+        return err
       } else {
-        return data;
+        signedUrl.push(data)
       }
     })
+    return signedUrl
   }
 }
 
