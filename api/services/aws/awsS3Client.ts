@@ -36,6 +36,24 @@ export class S3Client {
     }
     return resultBodyContents
   }
+
+  async getSignedUrl(fileName: string, fileType: string) {
+    let params = {
+      Bucket: bucketName,
+      Key: fileName,
+      Expires: 60,
+      ContentType: fileType
+    }
+
+    let signedUrl = await awsS3.getSignedUrl('putObject', params, (err, data) => {
+      if (err) {
+        console.log(err);
+        return err;
+      } else {
+        return data;
+      }
+    })
+  }
 }
 
 interface S3File {
