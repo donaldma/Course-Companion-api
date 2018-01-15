@@ -19,26 +19,34 @@ router.get('/match/:id',
       let icalFileForUserJson = await IcalService.icalToJson(icalFileForUser)
       let courses = icalFileForUserJson.VCALENDAR[0].VEVENT
       
-      let toSend: any[] = []
+      let coursesArr: any[] = []
       for(let course of courses) {
+        coursesArr.push(course.SUMMARY)
+      }
+
+      let uniqueCourses = _.uniq(coursesArr)
+      for(let course of uniqueCourses) {
         await knex('course')
         .insert({
           userId: req.params.id,
-          name: course.SUMMARY,
+          name: course,
           created_at: new Date(),
           updated_at: new Date()
         })
-
-        let temp = await knex('course')
-          .select()
-          toSend.push(temp)
-        
-        console.log(_.groupBy(temp, 'name'))
-        
       }
+
+        let allCoursesForUser = await knex('course')
+          .select()
+
+        let groupedByCourseName = _.groupBy(allCoursesForUser, 'name')
+        console.log(groupedByCourseName)
+        
+        for(let course in groupedByCourseName) {
+          console.log(groupedByCourseName[course])
+        }
     }
  
-    res.send('good')
+    res.send('ok')
   }
 )
 
