@@ -25,25 +25,17 @@ router.get('/match/:id',
       }
 
       let uniqueCourses = _.uniq(coursesArr)
-      for(let course of uniqueCourses) {
-        await knex('course')
-        .insert({
-          userId: req.params.id,
-          name: course,
-          created_at: new Date(),
-          updated_at: new Date()
-        })
-      }
+      await IcalService.addCoursesToDb(uniqueCourses, req.params.id)
 
-        let allCoursesForUser = await knex('course')
-          .select()
+      let allCoursesForUser = await knex('course')
+        .select()
 
-        let groupedByCourseName = _.groupBy(allCoursesForUser, 'name')
-        console.log(groupedByCourseName)
-        
-        for(let course in groupedByCourseName) {
-          console.log(groupedByCourseName[course])
-        }
+      // let groupedByCourseName = _.groupBy(allCoursesForUser, 'name')
+      // console.log(groupedByCourseName)
+      
+      // for(let course in groupedByCourseName) {
+      //   console.log(groupedByCourseName[course])
+      // }
     }
  
     res.send('ok')

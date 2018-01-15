@@ -58,9 +58,7 @@ export default {
         email: email,
         facebookId: facebookId,
         gender: gender,
-        city: city,
-        created_at: new Date(),
-        updated_at: new Date()
+        city: city
       }
 
       const user = await UserRepository.create(createObject)
