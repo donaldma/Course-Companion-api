@@ -12,33 +12,35 @@ const router = Router({ mergeParams: true })
 
 export default router
 
-router.get('/match/:id',
+router.get('/courses/:id',
   async function (req, res, next) {
     let icalFileForUser = await getIcalFileForUser(req.params.id)
-    if(icalFileForUser) {
-      let icalFileForUserJson = await IcalService.icalToJson(icalFileForUser)
-      let courses = icalFileForUserJson.VCALENDAR[0].VEVENT
-      
-      let coursesArr: any[] = []
-      for(let course of courses) {
-        coursesArr.push(course.SUMMARY)
+    let icalFileForUserJson = await IcalService.icalToJson(icalFileForUser)
+    let courses = icalFileForUserJson.VCALENDAR[0].VEVENT
+    
+    let coursesArr: any[] = []
+    for(let course of courses) {
+      coursesArr.push(course.SUMMARY)
+    }
+
+    for(let course of _.uniq(coursesArr)) {
+      await IcalService.addCourseToDb(course, req.params.id)
+    }
+
+    let allCoursesForUser = await knex('course')
+      .select()
+
+    let fullSend: any[] = []
+    let groupedByCourseName = _.groupBy(allCoursesForUser, 'name')
+    for(let course in groupedByCourseName) {
+      let objToSend = {
+        courseName: course,
+        studentData: groupedByCourseName[course]
       }
-
-      let uniqueCourses = _.uniq(coursesArr)
-      await IcalService.addCoursesToDb(uniqueCourses, req.params.id)
-
-      let allCoursesForUser = await knex('course')
-        .select()
-
-      // let groupedByCourseName = _.groupBy(allCoursesForUser, 'name')
-      // console.log(groupedByCourseName)
-      
-      // for(let course in groupedByCourseName) {
-      //   console.log(groupedByCourseName[course])
-      // }
+      fullSend.push(objToSend)
     }
  
-    res.send('ok')
+    res.send(fullSend)
   }
 )
 
