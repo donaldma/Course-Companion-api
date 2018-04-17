@@ -16,9 +16,9 @@ require(path.join(__dirname, '/server.js'))
 import UserController from './api/controllers/UserController'
 import IcalController from './api/controllers/IcalController'
 
-setInterval(function () {
-  http.get('http://donaldma-api.herokuapp.com')
-}, 300000)
+// setInterval(function () {
+//   http.get('http://donaldma-api.herokuapp.com')
+// }, 300000)
 
 app.use(cors())
 app.use(knexLogger(knex));
